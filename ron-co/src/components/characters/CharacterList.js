@@ -1,25 +1,32 @@
-// components/characters/CharacterList.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import CharacterCard from './CharacterCard';
-import { useFilters } from '../../hooks/useFilters';
+import CharacterDetail from './CharacterDetail';
 
 const CharacterList = ({ characters }) => {
-  const { filteredCharacters } = useFilters(characters);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
-  if (!filteredCharacters.length) {
-    return (
-      <div className="text-center text-white py-8">
-        No se encontraron personajes con los filtros actuales.
-      </div>
-    );
+  if (!characters.length) {
+    return <p className="no-results">No se encontraron personajes</p>;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredCharacters.map((character) => (
-        <CharacterCard key={character.name} character={character} />
-      ))}
-    </div>
+    <>
+      <div className="character-grid">
+        {characters.map((character) => (
+          <CharacterCard
+            key={character.name}
+            character={character}
+            onClick={setSelectedCharacter}
+          />
+        ))}
+      </div>
+      {selectedCharacter && (
+        <CharacterDetail
+          character={selectedCharacter}
+          onClose={() => setSelectedCharacter(null)}
+        />
+      )}
+    </>
   );
 };
 

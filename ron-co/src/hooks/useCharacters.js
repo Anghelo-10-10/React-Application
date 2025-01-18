@@ -1,19 +1,21 @@
+// hooks/useCharacters.js
 import { useState, useEffect } from 'react';
 import { fetchCharacters } from '../services/api';
 
 export const useCharacters = () => {
-  const [characters, setCharacters] = useState([]);
+  const [allCharacters, setAllCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedHouse, setSelectedHouse] = useState('');
 
   useEffect(() => {
     const loadCharacters = async () => {
       try {
-        setLoading(true);
         const data = await fetchCharacters();
-        setCharacters(data);
+        setAllCharacters(data);
       } catch (err) {
-        setError(err.message);
+        setError('Error al cargar los personajes');
       } finally {
         setLoading(false);
       }
@@ -22,5 +24,19 @@ export const useCharacters = () => {
     loadCharacters();
   }, []);
 
-  return { characters, loading, error };
+  const characters = allCharacters.filter(character => {
+    const matchesSearch = character.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesHouse = !selectedHouse || character.house === selectedHouse;
+    return matchesSearch && matchesHouse;
+  });
+
+  return {
+    characters,
+    loading,
+    error,
+    searchQuery,
+    selectedHouse,
+    setSearchQuery,
+    setSelectedHouse
+  };
 };

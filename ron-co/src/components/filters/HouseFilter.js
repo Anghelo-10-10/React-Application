@@ -5,7 +5,6 @@ import { HOUSES } from '../../utils/constants';
 const HouseFilter = ({ value, onChange }) => {
   return (
     <div className="filter-group">
-      <label className="filter-label">Casa</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

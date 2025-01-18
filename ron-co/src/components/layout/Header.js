@@ -1,20 +1,12 @@
 // components/layout/Header.jsx
 import React from 'react';
-import { useQuiz } from '../../hooks/useQuiz';
 
-const Header = () => {
-  const { startQuiz } = useQuiz();
-
+const Header = ({ children }) => {
   return (
     <header className="header">
-      <div className="container header-content">
-        <div className="logo-container">
-          <span className="menu-icon">☰</span>
-          <h1 className="logo">Harry Potter Explorer</h1>
-        </div>
-        <button onClick={startQuiz} className="button button-primary">
-          ¿A qué casa perteneces?
-        </button>
+      <div className="container">
+        <h1 className="logo">POTTER???</h1>
+        {children}
       </div>
     </header>
   );

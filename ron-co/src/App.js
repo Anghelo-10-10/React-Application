@@ -1,54 +1,41 @@
 // App.jsx
 import React from 'react';
 import './styles/index.css';
-
-// Import components
 import Layout from './components/layout/Layout';
 import Header from './components/layout/Header';
-import Sidebar from './components/layout/Sidebar';
 import CharacterList from './components/characters/CharacterList';
-import HouseQuiz from './components/quiz/HouseQuiz';
-
-// Import context and hooks
-import { FilterProvider } from './context/FilterContext';
+import SearchBar from './components/filters/SearchBar';
+import HouseFilter from './components/filters/HouseFilter';
 import { useCharacters } from './hooks/useCharacters';
 
 const App = () => {
-  const { characters, loading, error } = useCharacters();
+  const { 
+    characters, 
+    loading, 
+    error, 
+    searchQuery, 
+    selectedHouse, 
+    setSearchQuery, 
+    setSelectedHouse 
+  } = useCharacters();
 
-  if (loading) {
-    return (
-      <div className="loading">
-        <div className="spinner"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error">
-        {error}
-      </div>
-    );
-  }
+  if (loading) return <div className="loading">Cargando...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
-    <FilterProvider>
-      <div className="main-layout">
-        <Header />
-        <div className="container">
-          <div className="grid">
-            <aside className="sidebar">
-              <Sidebar />
-            </aside>
-            <main>
-              <CharacterList characters={characters} />
-            </main>
+    <Layout>
+      <div className="app-container">
+        <Header>
+          <div className="filters-container">
+            <SearchBar value={searchQuery} onChange={setSearchQuery} />
+            <HouseFilter value={selectedHouse} onChange={setSelectedHouse} />
           </div>
-        </div>
-        <HouseQuiz />
+        </Header>
+        <main className="container">
+          <CharacterList characters={characters} />
+        </main>
       </div>
-    </FilterProvider>
+    </Layout>
   );
 };
 
