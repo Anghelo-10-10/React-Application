@@ -1,4 +1,3 @@
-// hooks/useCharacters.js
 import { useState, useEffect } from 'react';
 import { fetchCharacters } from '../services/api';
 

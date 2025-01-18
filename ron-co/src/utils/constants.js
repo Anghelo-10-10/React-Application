@@ -1,4 +1,3 @@
-// utils/constants.js
 export const HOUSES = {
     GRYFFINDOR: 'Gryffindor',
     SLYTHERIN: 'Slytherin',

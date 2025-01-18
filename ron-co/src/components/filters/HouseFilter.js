@@ -1,4 +1,3 @@
-// components/filters/HouseFilter.jsx
 import React from 'react';
 import { HOUSES } from '../../utils/constants';
 
